@@ -1,0 +1,8 @@
+add_subdirectory(src)
+# if(ENABLE_UNIT_TESTS)
+#   add_subdirectory(tests)
+# endif()
+if(ENABLE_EXAMPLES_TESTS)
+  add_subdirectory(examples)
+endif()
+# add_subdirectory(doc)

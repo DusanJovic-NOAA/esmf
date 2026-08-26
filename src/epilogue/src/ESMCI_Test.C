@@ -96,13 +96,14 @@ int Test(
     return(ESMF_FAILURE);
   }
 
+  const char *fileName = strrchr(file, '/') ? strrchr(file, '/') + 1 : file;
   if (condition) {
-    msgbuf << "PASS " << name << ", " << file << ", line " << line;
+    msgbuf << "PASS " << name << ", " << fileName << ", line " << line;
     whichLog->Write(msgbuf, ESMC_LOGMSG_INFO);
     if (!only)
       fprintf(stderr, "%s\n", msgbuf.str().c_str());
   }else {
-    msgbuf << "FAIL " << name << ", " << file << ", line " << line << ": "
+    msgbuf << "FAIL " << name << ", " << fileName << ", line " << line << ": "
       << failMsg;
     whichLog->Write(msgbuf, ESMC_LOGMSG_INFO);
     if (!only)
@@ -156,14 +157,15 @@ int TestEnd(
     return(ESMF_FAILURE);
   }
 
-  msgbuf << "Ending Test, file " << file << ", line " << line;
+  const char *fileName = strrchr(file, '/') ? strrchr(file, '/') + 1 : file;
+  msgbuf << "Ending Test, file " << fileName << ", line " << line;
   whichLog->Write(msgbuf, ESMC_LOGMSG_INFO);
   if (!only)
     fprintf(stderr, "%s\n", msgbuf.str().c_str());
 
   rc = ESMCI_Finalize();
   if (rc != ESMF_SUCCESS) {
-    msgbuf << "FAIL: " << file << ", line" << line << ", Finalizing ESMF";
+    msgbuf << "FAIL: " << fileName << ", line" << line << ", Finalizing ESMF";
     whichLog->Write(msgbuf, ESMC_LOGMSG_INFO);
     if (!only)
       fprintf(stderr, "%s\n", msgbuf.str().c_str());
@@ -229,9 +231,10 @@ bool TestMaxPETs(
     return (false);
   }
 
+  const char *fileName = strrchr(file, '/') ? strrchr(file, '/') + 1 : file;
   globalVM = ESMCI::VM::getGlobal(&rc);
   if ((globalVM == NULL) || (rc != ESMF_SUCCESS)) {
-    msgbuf << "FAIL  rc=" << rc << ", " << file << ", line " << line
+    msgbuf << "FAIL  rc=" << rc << ", " << fileName << ", line " << line
            << ", Unable to get GlobalVM";
 
     whichLog->Write(msgbuf, ESMC_LOGMSG_INFO);
@@ -246,7 +249,7 @@ bool TestMaxPETs(
   if (numPETs > petCount) {
     failMsg << "These tests must not run on more than " << petCount 
             << " processors.";
-    msgbuf << "SKIP  " << failMsg.str() << ", " << file << ", line " << line;
+    msgbuf << "SKIP  " << failMsg.str() << ", " << fileName << ", line " << line;
     whichLog->Write(msgbuf, ESMC_LOGMSG_INFO);
     if (!only)
       fprintf(stderr, "%s\n", msgbuf.str().c_str());
@@ -301,9 +304,10 @@ bool TestMinPETs(
     return (false);
   }
 
+  const char *fileName = strrchr(file, '/') ? strrchr(file, '/') + 1 : file;
   globalVM = ESMCI::VM::getGlobal(&rc);
   if ((globalVM == NULL) || (rc != ESMF_SUCCESS)) {
-    msgbuf << "FAIL  rc=" << rc << ", " << file << ", line " << line
+    msgbuf << "FAIL  rc=" << rc << ", " << fileName << ", line " << line
            << ", Unable to get GlobalVM";
 
     whichLog->Write(msgbuf, ESMC_LOGMSG_INFO);
@@ -318,7 +322,7 @@ bool TestMinPETs(
   if (numPETs < petCount) {
     failMsg << "These tests must not run on less than " << petCount 
             << " processors.";
-    msgbuf << "SKIP  " << failMsg.str() << ", " << file << ", line " << line;
+    msgbuf << "SKIP  " << failMsg.str() << ", " << fileName << ", line " << line;
    whichLog->Write(msgbuf, ESMC_LOGMSG_INFO);
     if (!only)
       fprintf(stderr, "%s\n", msgbuf.str().c_str());
@@ -373,9 +377,10 @@ bool TestNumPETs(
     return (false);
   }
 
+  const char *fileName = strrchr(file, '/') ? strrchr(file, '/') + 1 : file;
   globalVM = ESMCI::VM::getGlobal(&rc);
   if ((globalVM == NULL) || (rc != ESMF_SUCCESS)) {
-    msgbuf << "FAIL  rc=" << rc << ", " << file << ", line " << line
+    msgbuf << "FAIL  rc=" << rc << ", " << fileName << ", line " << line
            << ", Unable to get GlobalVM";
 
     whichLog->Write(msgbuf, ESMC_LOGMSG_INFO);
@@ -390,7 +395,7 @@ bool TestNumPETs(
   if (numPETs != petCount) {
     failMsg << "These tests must not run on exactly " << petCount 
             << " processors.";
-    msgbuf << "SKIP  " << failMsg.str() << ", " << file << ", line " << line;
+    msgbuf << "SKIP  " << failMsg.str() << ", " << fileName << ", line " << line;
     whichLog->Write(msgbuf, ESMC_LOGMSG_INFO);
     if (!only)
       fprintf(stderr, "%s\n", msgbuf.str().c_str());
@@ -446,7 +451,8 @@ int TestStart(
     return(ESMF_FAILURE);
   }
 
-  const char *underScore = strchr(file, '_');
+  const char *fileName = strrchr(file, '/') ? strrchr(file, '/') + 1 : file;
+  const char *underScore = strchr(fileName, '_');
   if (underScore == NULL) underScore = file-1;
   const char *period = strrchr(file, '.');
   int numChars = period - underScore;
@@ -461,7 +467,7 @@ int TestStart(
   if (rc2 != ESMF_SUCCESS)
     rc = rc2;
   if (rc != ESMF_SUCCESS) {
-    msgbuf << "FAIL  rc=" << rc << ", " << file << ", line " << line
+    msgbuf << "FAIL  rc=" << rc << ", " << fileName << ", line " << line
            << ", Unable to initialize ESMF";
     whichLog->Write(msgbuf, ESMC_LOGMSG_INFO);
     if (!only)
@@ -478,7 +484,7 @@ int TestStart(
 
   globalVM = ESMCI::VM::getGlobal(&rc);
   if ((globalVM == NULL) || (rc != ESMF_SUCCESS)) {
-    msgbuf << "FAIL  rc=" << rc << ", " << file << ", line " << line
+    msgbuf << "FAIL  rc=" << rc << ", " << fileName << ", line " << line
            << ", Unable to get GlobalVM";
 
 
@@ -492,7 +498,7 @@ int TestStart(
   numPETs = globalVM->getPetCount();
   PETnum = globalVM->getLocalPet();
 
-  msgbuf << "Beginning Test, file " << file << ", line " << line;
+  msgbuf << "Beginning Test, file " << fileName << ", line " << line;
   whichLog->Write(msgbuf, ESMC_LOGMSG_INFO);
   if (!only)
     fprintf(stderr, "%s\n", msgbuf.str().c_str());

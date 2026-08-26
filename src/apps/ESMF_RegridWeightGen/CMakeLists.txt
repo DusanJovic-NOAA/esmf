@@ -1,0 +1,6 @@
+add_executable(ESMF_RegridWeightGen ESMF_RegridWeightGen.F90)
+set_property(TARGET ESMF_RegridWeightGen PROPERTY LINKER_LANGUAGE Fortran)
+
+target_link_libraries(ESMF_RegridWeightGen esmf)
+
+install(TARGETS ESMF_RegridWeightGen)
