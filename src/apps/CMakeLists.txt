@@ -1,0 +1,10 @@
+add_subdirectory(ESMF_PrintInfo)
+add_subdirectory(ESMF_PrintInfoC)
+add_subdirectory(ESMF_RegridWeightGen)
+add_subdirectory(ESMF_WebServController)
+add_subdirectory(ESMF_Regrid)
+# add_subdirectory(ESMX_Builder)
+
+if(ESMF_MOAB)
+add_subdirectory(ESMF_Scrip2Unstruct)
+endif()

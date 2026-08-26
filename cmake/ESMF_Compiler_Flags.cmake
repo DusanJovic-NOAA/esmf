@@ -1,0 +1,10 @@
+
+set(CPPFLAGS "-DESMF_LOWERCASE_SINGLEUNDERSCORE -DESMF_OS_${ESMF_OS}=1")
+
+include(cmake/ESMF_Fortran_${CMAKE_Fortran_COMPILER_ID}_Flags.cmake)
+include(cmake/ESMF_CXX_${CMAKE_CXX_COMPILER_ID}_Flags.cmake)
+include(cmake/ESMF_C_${CMAKE_CXX_COMPILER_ID}_Flags.cmake)
+
+set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} ${CPPFLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CPPFLAGS}")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CPPFLAGS}")
