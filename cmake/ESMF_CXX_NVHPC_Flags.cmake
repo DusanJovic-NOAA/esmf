@@ -1,0 +1,9 @@
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g -mcmodel=small -pthread")
+
+if(ESMF_OPENMP)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mp")
+endif()
+
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0")
+
+set(CMAKE_CXX_FLAGS_RELEASE "-O2")

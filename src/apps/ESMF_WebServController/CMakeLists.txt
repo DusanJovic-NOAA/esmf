@@ -1,0 +1,6 @@
+add_executable(ESMF_WebServController ESMF_WebServController.C)
+set_property(TARGET ESMF_WebServController PROPERTY LINKER_LANGUAGE CXX)
+
+target_link_libraries(ESMF_WebServController esmf)
+
+install(TARGETS ESMF_WebServController)
